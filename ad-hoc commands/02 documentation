@@ -1,0 +1,11 @@
+## -- documentation
+
+ansible-doc
+
+ansible-doc -l
+ansible-doc -l | grep ping
+
+ansible-doc ping
+
+ansible-doc -l | grep builtin
+
