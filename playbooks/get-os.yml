@@ -1,0 +1,6 @@
+- name: Get Operating System Info
+  hosts: linux
+  tasks:
+    - name: Print the operating system
+      ansible.builtin.debug:
+        msg: "The OS is {{ ansible_facts['os_family'] }} ({{ ansible_facts['distribution'] }})"
