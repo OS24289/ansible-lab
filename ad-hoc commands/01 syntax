@@ -1,5 +1,10 @@
 # ping localhost
 
 [option variable       ] [cmd  ] [target ] [module]
-ansible_connection=local ansible localhost -m ping
+ansible_connection=local ansible localhost -m package -a 'name=zsh'
+
+# -b == become root
+ansible_connection=local ansible localhost -b -m package -a 'name=zsh'
+
+
 
