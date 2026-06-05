@@ -1,0 +1,4 @@
+# ping localhost
+
+ansible_connection=local ansible localhost -m ping
+
