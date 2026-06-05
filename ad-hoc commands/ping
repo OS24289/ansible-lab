@@ -1,4 +1,6 @@
-# ping localhost
+# ping localhost or server
 
 ansible_connection=local ansible localhost -m ping
+
+###ansible_connection=local ansible node02.ansible.lab -m ping
 
