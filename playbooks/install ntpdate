@@ -1,0 +1,8 @@
+- name: install nmtdate
+  become: yes
+  
+  package:
+    name: ntpdate
+    state: present
+
+    
