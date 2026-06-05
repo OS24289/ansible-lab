@@ -1,0 +1,5 @@
+# ping localhost
+
+[option variable       ] [cmd  ] [target ] [module]
+ansible_connection=local ansible localhost -m ping
+
