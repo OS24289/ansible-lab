@@ -13,46 +13,49 @@ Create a file from a template
 Use a Jinja2 template and a playbook to create /etc/motd on all managed hosts. Include the hostname and operating system distribution in the message.
 
 1. **Create users and groups**  
-   Write a playbook that creates a `webadmins` group and adds three specified users to it. Ensure each user has a home directory and Bash as their login shell. Run it against a host group named `web`.
+Write a playbook that creates a `webadmins` group and adds three specified users to it. 
+Ensure each user has a home directory and Bash as their login shell. 
+Run it against a host group named `web`.
 
 2. **Install and start a service**  
-   Create a playbook that installs `httpd` on all hosts in the `web` group, enables and starts the service, and opens the HTTP service in the firewall. Make the playbook safe to run repeatedly.
+Create a playbook that installs `httpd` on all hosts in the `web` group, enables and starts the service, and opens the HTTP service in the firewall. 
+Make the playbook safe to run repeatedly.
 
 1. **Create a static inventory**  
-   Define three managed hosts in an inventory file and group them as `web` and `db`. Verify Ansible can connect to each host.
+Define three managed hosts in an inventory file and group them as `web` and `db`. Verify Ansible can connect to each host.
 
 2. **Gather and display facts**  
-   Write a playbook that gathers facts from all hosts and displays each host’s operating system distribution and IP address.
+Write a playbook that gathers facts from all hosts and displays each host’s operating system distribution and IP address.
 
 3. **Install a package**  
-   Create a playbook that installs `httpd` on all hosts in the `web` group and ensures the package is present.
+Create a playbook that installs `httpd` on all hosts in the `web` group and ensures the package is present.
 
 4. **Start and enable a service**  
-   Ensure `httpd` is running and enabled at boot on the `web` hosts.
+Ensure `httpd` is running and enabled at boot on the `web` hosts.
 
 5. **Create a user and group**  
-   Create a group named `developers` and a user named `devuser` who belongs to that group.
+Create a group named `developers` and a user named `devuser` who belongs to that group.
 
 6. **Create a directory**  
-   Ensure `/srv/appdata` exists, is owned by `root`, and has permissions `0750`.
+Ensure `/srv/appdata` exists, is owned by `root`, and has permissions `0750`.
 
 7. **Copy a static file**  
-   Copy a local file named `motd` to `/etc/motd` on all managed hosts with appropriate ownership and permissions.
+Copy a local file named `motd` to `/etc/motd` on all managed hosts with appropriate ownership and permissions.
 
 8. **Use a variable**  
-   Define a variable for a package name and use it in a playbook to install that package on a host group.
+Define a variable for a package name and use it in a playbook to install that package on a host group.
 
 9. **Manage a line in a file**  
-   Ensure `/etc/issue` contains the line `Authorized users only.` without adding duplicate copies.
+Ensure `/etc/issue` contains the line `Authorized users only.` without adding duplicate copies.
 
 10. **Use a handler**  
-    Copy an `httpd` configuration file to the managed hosts and restart `httpd` only when the file changes.
+Copy an `httpd` configuration file to the managed hosts and restart `httpd` only when the file changes.
 
 11. **Run a command with privilege escalation**  
-    Write a playbook that creates `/root/ansible-test.txt` and runs the necessary task with privilege escalation.
+Write a playbook that creates `/root/ansible-test.txt` and runs the necessary task with privilege escalation.
 
 12. **Limit a playbook run**  
-    Run a playbook against only one named host from a multi-host inventory, without changing the playbook.
+Run a playbook against only one named host from a multi-host inventory, without changing the playbook.
 
 
 
@@ -66,61 +69,70 @@ Configure a web server with a handler
 Create a role that installs and configures httpd. Deploy a custom configuration file from a template and restart the service only when the configuration changes.
 
 Manage users with variables
-Create a playbook that reads user definitions from a variable file and creates the listed users with specified groups and shell settings. Ensure one user has passwordless sudo access using a file in /etc/sudoers.d.
+Create a playbook that reads user definitions from a variable file and creates the listed users with specified groups and shell settings. 
+Ensure one user has passwordless sudo access using a file in /etc/sudoers.d.
 
 Use a vault-encrypted variable
-Store a database password in an Ansible Vault-encrypted file. Write a playbook that installs and configures a database service using that secret, without exposing the password in task output.
+Store a database password in an Ansible Vault-encrypted file. 
+Write a playbook that installs and configures a database service using that secret, without exposing the password in task output.
 
 Mount a filesystem persistently
-Write a playbook for a group of application servers that creates a mount-point directory and mounts a specified filesystem. Ensure the mount is configured to persist across reboots and that repeated runs make no unnecessary changes.
+Write a playbook for a group of application servers that creates a mount-point directory and mounts a specified filesystem. 
+Ensure the mount is configured to persist across reboots and that repeated runs make no unnecessary changes.
 
 3. **Manage files with variables**  
-   Use a playbook to install `httpd` and deploy a Jinja2 template as `/var/www/html/index.html`. The page should display the host’s inventory name and the value of a variable defined for the `web` group.
+Use a playbook to install `httpd` and deploy a Jinja2 template as `/var/www/html/index.html`. 
+The page should display the host’s inventory name and the value of a variable defined for the `web` group.
 
 4. **Configure storage**  
-   On hosts in a `storage` group, create a 1 GiB logical volume named `data` in volume group `vgdata`, format it as XFS, and mount it persistently at `/data`. Do not recreate or resize the volume if it already exists.
+On hosts in a `storage` group, create a 1 GiB logical volume named `data` in volume group `vgdata`, format it as XFS, and mount it persistently at `/data`. 
+Do not recreate or resize the volume if it already exists.
 
 5. **Use handlers and templates**  
-   Configure `sshd` using a template that sets `AllowGroups` from a variable. Validate the generated configuration before installing it, and restart `sshd` only when the configuration changes.
+Configure `sshd` using a template that sets `AllowGroups` from a variable. 
+Validate the generated configuration before installing it, and restart `sshd` only when the configuration changes.
 
 6. **Restrict task execution**  
-   Create a playbook that installs and configures `chrony` only on hosts in the `time_servers` group. Use a handler to restart the service when its configuration changes. Make it possible to run only the configuration tasks using tags.
+Create a playbook that installs and configures `chrony` only on hosts in the `time_servers` group. 
+Use a handler to restart the service when its configuration changes. Make it possible to run only the configuration tasks using tags.
 
 7. **Set up a scheduled job**  
-   Configure a daily cron job for a given user that runs a script from `/usr/local/sbin`. Deploy the script with appropriate ownership and permissions, and use variables to control the schedule and script contents.
+Configure a daily cron job for a given user that runs a script from `/usr/local/sbin`. 
+Deploy the script with appropriate ownership and permissions, and use variables to control the schedule and script contents.
 
 8. **Collect and use system facts**  
-   Write a playbook that gathers facts from all managed hosts, creates `/etc/host-summary` on each, and records the hostname, default IPv4 address, and operating system family. Use a template and ensure the file has the correct ownership and permissions.
+Write a playbook that gathers facts from all managed hosts, creates `/etc/host-summary` on each, and records the hostname, default IPv4 address, and operating system family. 
+Use a template and ensure the file has the correct ownership and permissions.
 
 13. **Use host and group variables**  
-    Set a different web server document root for each host in the `web` group using host-specific variables.
+Set a different web server document root for each host in the `web` group using host-specific variables.
 
 14. **Template a configuration file**  
-    Use a Jinja2 template to generate an `httpd` configuration file containing a variable port number and server name.
+Use a Jinja2 template to generate an `httpd` configuration file containing a variable port number and server name.
 
 15. **Use a loop to create users**  
-    Create four users from a variable list. Give each user a specified supplementary group.
+Create four users from a variable list. Give each user a specified supplementary group.
 
 16. **Configure firewall access**  
-    Ensure the firewall is running and allows incoming HTTP traffic on the `web` hosts.
+Ensure the firewall is running and allows incoming HTTP traffic on the `web` hosts.
 
 17. **Create a logical volume**  
-    On a designated host, create a volume group and a logical volume, format it with XFS, and mount it persistently.
+On a designated host, create a volume group and a logical volume, format it with XFS, and mount it persistently.
 
 18. **Use conditionals**  
-    Install a package only on hosts running a specified operating system family, and report a message on other hosts.
+Install a package only on hosts running a specified operating system family, and report a message on other hosts.
 
 19. **Collect task results**  
-    Register the result of a command, then display its output only if the command succeeds.
+Register the result of a command, then display its output only if the command succeeds.
 
 20. **Build and use a role**  
-    Create a role that installs and configures a web server, then call it from a playbook for the `web` group.
+Create a role that installs and configures a web server, then call it from a playbook for the `web` group.
 
 21. **Encrypt sensitive data**  
-    Store a password in an Ansible Vault-encrypted variable file and use it in a playbook to create a user account.
+Store a password in an Ansible Vault-encrypted variable file and use it in a playbook to create a user account.
 
 22. **Use tags and selective execution**  
-    Tag package installation and service configuration tasks differently. Run only the service configuration tasks from the command line.
+Tag package installation and service configuration tasks differently. Run only the service configuration tasks from the command line.
 
 
 
@@ -130,40 +142,50 @@ Write a playbook for a group of application servers that creates a mount-point d
 Difficult
 
 Build a multi-role deployment
-Create roles for a web server, application runtime, and firewall. Use variables to configure the application, handlers to restart affected services, and tags so each role can be run independently. The playbook should apply the roles in the correct order to the appropriate host groups.
+Create roles for a web server, application runtime, and firewall. 
+Use variables to configure the application, handlers to restart affected services, and tags so each role can be run independently. 
+The playbook should apply the roles in the correct order to the appropriate host groups.
 
 Automate a storage and service configuration
-Write a playbook that creates a partition and filesystem on a specified unused disk, mounts it persistently, and configures an application service to use the mount. Add safeguards so the playbook fails clearly if the target disk is missing or already contains unexpected data.
+Write a playbook that creates a partition and filesystem on a specified unused disk, mounts it persistently, and configures an application service to use the mount. 
+Add safeguards so the playbook fails clearly if the target disk is missing or already contains unexpected data.
 
 9. **Configure conditional storage across host groups**  
-   Write a role that configures `/srv/archive` on hosts in an `archive` group. Select the correct block device from a host variable, create a partition and XFS filesystem, mount it persistently, and fail with a clear message if the required device variable is missing. Ensure the role is idempotent.
+Write a role that configures `/srv/archive` on hosts in an `archive` group. 
+Select the correct block device from a host variable, create a partition and XFS filesystem, mount it persistently, 
+and fail with a clear message if the required device variable is missing. Ensure the role is idempotent.
 
 10. **Build a role-based application deployment**  
-    Create a role that deploys a small web application. It should install required packages, create a dedicated system user, deploy application files from templates, configure and enable a service, and open the required firewall port. Use defaults and handlers appropriately, validate configuration before applying it, and support a `--check` run without making unintended changes.
+Create a role that deploys a small web application. It should install required packages, create a dedicated system user, 
+deploy application files from templates, configure and enable a service, and open the required firewall port. 
+Use defaults and handlers appropriately, validate configuration before applying it, and support a `--check` run without making unintended changes.
 
 23. **Deploy a multi-tier application**  
-    Configure database hosts first, then web hosts. Use group variables for database connection details and templates to configure the application tier.
+Configure database hosts first, then web hosts. Use group variables for database connection details and templates to configure the application tier.
 
 24. **Create a reusable role with defaults and handlers**  
-    Build a role that configures a service. Include default variables, a Jinja2 template, a handler that restarts the service, and a task that validates the rendered configuration before applying it.
+Build a role that configures a service. Include default variables, a Jinja2 template, a handler that restarts the service, 
+and a task that validates the rendered configuration before applying it.
 
 25. **Manage storage with conditional mounts**  
-    Create and mount a logical volume only if the target device or volume group is available. Ensure the mount persists across reboots and avoid failing on hosts without the required storage.
+Create and mount a logical volume only if the target device or volume group is available. 
+Ensure the mount persists across reboots and avoid failing on hosts without the required storage.
 
 26. **Use dynamic task inclusion**  
-    Organize OS-specific configuration tasks in separate files and include the appropriate file based on each host’s operating system family.
+Organize OS-specific configuration tasks in separate files and include the appropriate file based on each host’s operating system family.
 
 27. **Configure a service with encrypted secrets**  
-    Use an encrypted Vault file for credentials, render them into a protected configuration file, and ensure the secrets do not appear in task output.
+Use an encrypted Vault file for credentials, render them into a protected configuration file, and ensure the secrets do not appear in task output.
 
 28. **Use Ansible facts to build configuration**  
-    Generate a host-specific configuration file using gathered facts, including the host’s address and a derived value based on its inventory group.
+Generate a host-specific configuration file using gathered facts, including the host’s address and a derived value based on its inventory group.
 
 29. **Make the playbook safely repeatable**  
-    Write a playbook that configures a service, firewall rule, and configuration file so repeated runs report no changes when the system is already in the desired state.
+Write a playbook that configures a service, firewall rule, and configuration file so repeated runs report no changes when the system is already in the desired state.
 
 30. **Troubleshoot and recover from failure**  
-    Create a playbook that checks whether a required service is available, records a useful diagnostic message if it is not, and performs a recovery action without unnecessarily restarting healthy services.
+Create a playbook that checks whether a required service is available, records a useful diagnostic message if it is not, 
+and performs a recovery action without unnecessarily restarting healthy services.
 
 
 
