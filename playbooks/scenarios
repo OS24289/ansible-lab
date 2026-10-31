@@ -1,0 +1,38 @@
+Easy
+
+Create an inventory
+Create an INI inventory with three managed hosts, grouped into web and db. Define a prod group containing both groups, and set the SSH user for all hosts.
+
+Gather system facts
+Write a playbook that targets all web servers, gathers facts, and displays each host’s OS family and default IPv4 address.
+
+Install and start a service
+Create a playbook that installs httpd on web servers, enables and starts the service, and verifies that it is running.
+
+Create a file from a template
+Use a Jinja2 template and a playbook to create /etc/motd on all managed hosts. Include the hostname and operating system distribution in the message.
+
+
+Medium
+
+Configure a web server with a handler
+Create a role that installs and configures httpd. Deploy a custom configuration file from a template and restart the service only when the configuration changes.
+
+Manage users with variables
+Create a playbook that reads user definitions from a variable file and creates the listed users with specified groups and shell settings. Ensure one user has passwordless sudo access using a file in /etc/sudoers.d.
+
+Use a vault-encrypted variable
+Store a database password in an Ansible Vault-encrypted file. Write a playbook that installs and configures a database service using that secret, without exposing the password in task output.
+
+Mount a filesystem persistently
+Write a playbook for a group of application servers that creates a mount-point directory and mounts a specified filesystem. Ensure the mount is configured to persist across reboots and that repeated runs make no unnecessary changes.
+
+
+Difficult
+
+Build a multi-role deployment
+Create roles for a web server, application runtime, and firewall. Use variables to configure the application, handlers to restart affected services, and tags so each role can be run independently. The playbook should apply the roles in the correct order to the appropriate host groups.
+
+Automate a storage and service configuration
+Write a playbook that creates a partition and filesystem on a specified unused disk, mounts it persistently, and configures an application service to use the mount. Add safeguards so the playbook fails clearly if the target disk is missing or already contains unexpected data.
+
