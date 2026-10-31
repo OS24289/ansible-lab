@@ -1,0 +1,104 @@
+These are **practice scenarios, not official Red Hat exam questions**. They’re designed to exercise common EX294 skills: inventory, variables, playbooks, roles, templates, handlers, facts, vaults, and Ansible Vault.
+
+## Easy — 12 scenarios
+
+1. **Create users**  
+   On all managed hosts, create users `alex` and `sam` with home directories. Add both to the `developers` group, creating the group if needed.
+
+2. **Install and start Apache**  
+   On hosts in the `web` group, install `httpd`, enable it at boot, and ensure it is running.
+
+3. **Create a directory**  
+   On all hosts, create `/opt/app/logs` owned by `appuser:appgroup`, with permissions `0750`.
+
+4. **Copy a static file**  
+   Copy a supplied `motd` file to `/etc/motd` on all managed hosts. Set owner and group to `root` and permissions to `0644`.
+
+5. **Manage a service**  
+   On hosts in the `database` group, ensure `mariadb` is enabled and started.
+
+6. **Install packages by group**  
+   Install `vim` and `tmux` on all hosts. Install `git` only on hosts in the `development` group.
+
+7. **Create a group and user**  
+   Create the `monitoring` group with GID `3500`, then create user `prometheus` with UID `3500`, primary group `monitoring`, and shell `/sbin/nologin`.
+
+8. **Set a hostname**  
+   Set each host’s hostname to its inventory name. Verify the change using an appropriate Ansible module.
+
+9. **Deploy a simple web page**  
+   On `web` hosts, install and start `httpd`, then create `/var/www/html/index.html` containing “Welcome to the web server”.
+
+10. **Gather and display facts**  
+    Write a playbook that gathers facts from all hosts and displays each host’s default IPv4 address.
+
+11. **Create a cron job**  
+    On all hosts, configure user `root` to run `/usr/local/bin/cleanup.sh` daily at 02:30.
+
+12. **Manage a line in a configuration file**  
+    Ensure `/etc/issue` contains the line `Authorized access only`. The task should be safe to run repeatedly.
+
+## Medium — 10 scenarios
+
+13. **Mount a filesystem persistently**  
+    On `storage` hosts, ensure `/dev/vdb1` is mounted at `/data` as `xfs`, and that the mount is configured to persist in `/etc/fstab`. Create the mount point if necessary.
+
+14. **Configure Apache with a template**  
+    Create an Apache virtual-host configuration from a Jinja2 template. Use variables for the server name and document root. Restart or reload `httpd` only when the configuration changes.
+
+15. **Build a role for a web server**  
+    Create a role named `webserver` that installs `httpd`, deploys a page from a template, enables and starts the service, and uses a handler to reload Apache when its configuration changes.
+
+16. **Use host and group variables**  
+    Configure `web` hosts to use document root `/srv/www`, and `database` hosts to use `/var/lib/mysql`. Store these values in the appropriate group variable files and reference them in a playbook.
+
+17. **Configure a firewall service**  
+    On `web` hosts, ensure `firewalld` is installed and running, and permanently allow the `http` service. Apply the firewall change immediately.
+
+18. **Create users from a variable list**  
+    Use a variable-defined list to create users `jordan`, `casey`, and `riley`. Assign each user to the supplementary group `appteam`, and create the group if it does not exist.
+
+19. **Use Ansible Vault for credentials**  
+    Store a database password in an encrypted variable file. Use it in a playbook to configure a database user, without exposing the password in plaintext in the playbook or command output.
+
+20. **Manage SELinux file context**  
+    On `web` hosts, configure `/srv/www` to have the SELinux type used for web content. Ensure the context is applied recursively and remains correct after relabeling.
+
+21. **Configure an NFS mount**  
+    On `client` hosts, mount `fileserver.example.com:/exports/shared` at `/mnt/shared` as NFS. Ensure it is mounted now and configured to mount at boot.
+
+22. **Validate a configuration before applying it**  
+    Deploy an `sshd_config` template to managed hosts. Validate the rendered file with `sshd -t` before replacing the active configuration, and restart `sshd` only if the file changes.
+
+## Difficult — 8 scenarios
+
+23. **Create and consume a custom role**  
+    Build a role named `database` that installs and configures MariaDB, creates a database named `inventory`, and creates user `inventory_app` with a password loaded from Vault. Include handlers and role defaults, and invoke the role only on `database` hosts.
+
+24. **Configure storage with a filesystem and mount**  
+    On `storage` hosts, create an LVM logical volume named `lv_archive` in volume group `vg_data`, sized at `5G`. Format it as `xfs`, mount it at `/archive`, and make the mount persistent. Do not recreate or overwrite an existing filesystem unnecessarily.
+
+25. **Use conditional logic based on facts**  
+    Install different package sets depending on the operating system family: install `httpd` on Red Hat-family hosts and `apache2` on Debian-family hosts. Enable and start the correct service on each host.
+
+26. **Implement a rolling web-server update**  
+    Update packages on `web` hosts in batches of two. Remove each host from the load balancer before updating it, restart Apache if required, verify the service is healthy, then add the host back. Keep a failure from leaving a host permanently out of rotation.
+
+27. **Deploy an application with a systemd service**  
+    Create a role that deploys an application to `/opt/acme`, renders `/etc/acme/acme.conf`, and installs a systemd unit. Ensure the service is enabled and running, and restart it only when its binary, configuration, or unit file changes.
+
+28. **Create a partition and mount it**  
+    On `storage` hosts, create a GPT partition on `/dev/vdc` using the available disk space, format it as `ext4`, and mount it at `/srv/archive`. Ensure the playbook is repeatable and does not damage an existing partition table or filesystem.
+
+29. **Use a dynamic host selection and delegation**  
+    Run a play only on hosts whose inventory group is `web`, but delegate a health-check request to a control or monitoring host. Use the target web host’s address in the request and fail the play if the check does not return a successful result.
+
+30. **Write a reusable deployment playbook**  
+    Create a playbook for an application group that:
+    - Creates `appuser` and `appgroup`.
+    - Installs packages listed in a variable.
+    - Creates `/opt/acme`, `/var/log/acme`, and `/etc/acme` with appropriate ownership and permissions.
+    - Deploys configuration and a systemd unit from templates.
+    - Validates the configuration before activation.
+    - Uses handlers to restart the application only when needed.
+    - Uses Vault-encrypted credentials and avoids displaying secrets in output.
